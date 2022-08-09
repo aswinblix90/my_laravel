@@ -25,16 +25,28 @@ Route::get('/', function () {
     // dd($posts);
     $files = File::files(resource_path("posts/"));
     $posts = [];
-    $posts = array_map(function($file){
-        $document = YamlFrontMatter::parseFile($file);
-        return new Post(
-            $document -> title,
-            $document -> date,
-            $document -> body(),
-            $document -> excerpt,
-            $document -> slug
-        );
-    },$files);
+    $posts = collect($files)
+                ->map(function($file){
+                    $document = YamlFrontMatter::parseFile($file);
+                    return new Post(
+                        $document->title,
+                        $document->date,
+                        $document->body(),
+                        $document->excerpt,
+                        $document->slug
+                    );
+                });
+
+    // $posts = array_map(function($file){
+    //     $document = YamlFrontMatter::parseFile($file);
+    //     return new Post(
+    //         $document -> title,
+    //         $document -> date,
+    //         $document -> body(),
+    //         $document -> excerpt,
+    //         $document -> slug
+    //     );
+    // },$files);
     // dd($posts);
     return view('posts',[
         'posts' => $posts
