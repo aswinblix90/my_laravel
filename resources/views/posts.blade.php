@@ -8,12 +8,13 @@
     <title>Document</title>
 </head>
 <body>
-    <?php foreach ($posts as $post): ?>
+    @foreach ($posts as $post)
+    {{-- @dd($loop) --}}
         <article>
-            <a href="posts/<?=$post->slug?>"><h1><?=$post->title?></h1></a>
-            <p><?=$post->excerpt?></p>
+            <a href="posts/{{$post->slug}}"><h1>{{$post->title}}</h1></a>
+            <p>{{$post->excerpt}}</p>
         </article>
-    <?php endforeach; ?>
+    @endforeach
 
 </body>
 </html>
