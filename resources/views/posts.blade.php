@@ -1,3 +1,4 @@
+
 <x-layout>
     @foreach ($posts as $post)
     {{-- @dd($loop) --}}
