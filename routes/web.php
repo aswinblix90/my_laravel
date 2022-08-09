@@ -23,19 +23,28 @@ Route::get('/', function () {
 
     // $test = YamlFrontMatter::parseFile($files[0]);
     // dd($posts);
-    $files = File::files(resource_path("posts/"));
     $posts = [];
-    $posts = collect($files)
-                ->map(function($file){
-                    $document = YamlFrontMatter::parseFile($file);
-                    return new Post(
-                        $document->title,
-                        $document->date,
-                        $document->body(),
-                        $document->excerpt,
-                        $document->slug
-                    );
-                });
+    $posts = collect(File::files(resource_path("posts/")))
+                // ->map(function($file){
+                //     return YamlFrontMatter::parseFile($file);
+                // }
+                ->map(fn($file)=> YamlFrontMatter::parseFile($file))
+                // ->map(function($document){
+                //     return new Post(
+                //         $document->title,
+                //         $document->date,
+                //         $document->body(),
+                //         $document->excerpt,
+                //         $document->slug
+                //     );
+                // });
+                ->map(fn($document)=> new Post(
+                    $document->title,
+                    $document->date,
+                    $document->body(),
+                    $document->excerpt,
+                    $document->slug
+                ));
 
     // $posts = array_map(function($file){
     //     $document = YamlFrontMatter::parseFile($file);
