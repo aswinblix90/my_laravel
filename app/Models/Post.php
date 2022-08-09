@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\File;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
+
 
 class Post extends Model
 {
@@ -27,8 +29,15 @@ class Post extends Model
     }
     public static function allPost()
     {
-        $files = File::files(resource_path('posts/'));
-        return array_map(fn($file)=>$file->getContents(),$files);
+       return collect(File::files(resource_path("posts/")))
+        ->map(fn ($file) => YamlFrontMatter::parseFile($file))
+            ->map(fn ($document) => new Post(
+                $document->title,
+                $document->date,
+                $document->body(),
+                $document->excerpt,
+                $document->slug
+            ));
     }
     public static function find($slug){
 
