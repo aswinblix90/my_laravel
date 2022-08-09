@@ -10,11 +10,25 @@ use Illuminate\Support\Facades\File;
 
 class Post extends Model
 {
+    public $title;
+    public $date;
+    public $body;
+    public $excerpt;
+    public $slug;
     use HasFactory;
+
+    public function __construct($title, $date, $body, $excerpt, $slug)
+    {
+        $this->title = $title;
+        $this->date = $date;
+        $this->body = $body;
+        $this->excerpt = $excerpt;
+        $this->slug = $slug;
+    }
     public static function allPost()
     {
-    $files = File::files(resource_path('posts/'));
-       return array_map(fn($file)=>$file->getContents(),$files);
+        $files = File::files(resource_path('posts/'));
+        return array_map(fn($file)=>$file->getContents(),$files);
     }
     public static function find($slug){
 
