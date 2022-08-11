@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\VarDumper\VarDumper;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,13 @@ Route::get('/', function () {
 Route::get('posts/{post:slug}', function (Post $post) {
     return view('/post', [
         'post' => $post
+    ]);
+});
+
+Route::get('categories/{category}',function(Category $category){
+
+    return view('posts', [
+        'posts' => $category->posts
     ]);
 });
 
