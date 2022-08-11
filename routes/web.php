@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use Illuminate\Support\Facades\File;
-
+use Symfony\Component\VarDumper\VarDumper;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\File;
 */
 
 Route::get('/', function () {
+    // $post = Post::find(1);
+    // var_dump($post->category->name);
     return view('posts', [
         'posts' => Post::all()
     ]);
@@ -27,3 +29,11 @@ Route::get('posts/{post:slug}', function (Post $post) {
         'post' => $post
     ]);
 });
+
+// Post::create([
+//     'category_id' => 3,
+//     'title' => 'My First hobbies post',
+//     'slug' => 'my-first-hobbies-post',
+//     'excerpt' => 'My first hobbies post excerpt',
+//     'body' => 'My first hobbies post body body'
+// ]);
