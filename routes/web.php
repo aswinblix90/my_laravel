@@ -5,6 +5,7 @@ use App\Models\Post;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\VarDumper\VarDumper;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,19 +21,27 @@ use App\Models\Category;
 Route::get('/', function () {
     // $post = Post::find(1);
     // var_dump($post->category->name);
+    // DB::listen(function($query){
+    //     logger($query->sql,$query->bindings);
+    // });
     return view('posts', [
-        'posts' => Post::all()
+        'posts' => Post::with('category')->get()
     ]);
 });
 
 Route::get('posts/{post:slug}', function (Post $post) {
+    // DB::listen(function ($query) {
+    //     logger($query->sql);
+    // });
     return view('/post', [
         'post' => $post
     ]);
 });
 
 Route::get('categories/{category}',function(Category $category){
-
+    // DB::listen(function ($query) {
+    //     logger($query->sql);
+    // });
     return view('posts', [
         'posts' => $category->posts
     ]);
