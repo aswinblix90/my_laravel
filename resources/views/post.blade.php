@@ -1,6 +1,6 @@
 <x-layout>
     <article>
-        <h1>{!!$post->title!!}</h1>
+        <h1>By <a href="#">{{$post->user->name}}</a> in {!!$post->title!!}</h1>
         <a href="categories/{{$post->category->id}}">{{$post->category->name}}</a>
         <p>{!!$post->body!!}</p>
     </article>
