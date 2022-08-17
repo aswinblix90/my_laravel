@@ -9,6 +9,6 @@
 </head>
 <body>
     {{$slot}}
-    <footer>All right reserver @aswin_blix</footer>
+    {{-- <footer>All right reserver @aswin_blix</footer> --}}
 </body>
 </html>    
