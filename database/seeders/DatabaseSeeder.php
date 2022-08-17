@@ -18,10 +18,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $user = User::factory()->create([
-            'name' => 'aswin blix'
+            'name' => 'aswin blix',
+            'username' => 'aswinblix'
+        ]);
+        $user1 = User::factory()->create([
+            'name' => 'shyni blix',
+            'username' => 'shyniblix'
         ]);
         Post::factory(5)->create([
             'user_id' => $user->id,
+        ]);
+        Post::factory(2)->create([
+            'user_id' => $user1->id,
         ]);
         // User::truncate();
         // Post::truncate();

@@ -5,6 +5,7 @@ use App\Models\Post;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\VarDumper\VarDumper;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -25,7 +26,7 @@ Route::get('/', function () {
     //     logger($query->sql,$query->bindings);
     // });
     return view('posts', [
-        'posts' => Post::latest('published_at')->with('category')->get()
+        'posts' => Post::latest('published_at')->with(['category', 'author'])->get()
     ]);
 });
 
@@ -46,7 +47,11 @@ Route::get('categories/{category}',function(Category $category){
         'posts' => $category->posts
     ]);
 });
-
+Route::get('authors/{author:username}',function(User $author){
+    return view('posts',[
+        'posts'=> $author->posts
+    ]);
+});
 // Post::create([
 //     'category_id' => 3,
 //     'title' => 'My First hobbies post',
