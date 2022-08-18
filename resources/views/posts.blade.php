@@ -11,18 +11,29 @@
         @include('_posts-header')
 
         <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
-                <x-post-featured-card></x-post-featured-card>
+            @if ($posts->count())
+                <x-post-featured-card :post="$posts[0]"></x-post-featured-card>
+                {{-- @php
+                    dd($posts[1]->category->id)
+                @endphp --}}
+                @if ($posts->count()>1)
+                    <div class="lg:grid lg:grid-cols-6">
+                        @foreach ($posts->skip(1) as $post)
+                        <x-post-card class="{{$loop->iteration < 3 ? 'col-span-3' : 'col-span-2'}}" :post="$post"/>
+                        @endforeach
+                    </div>
+                @endif
 
-            <div class="lg:grid lg:grid-cols-2">
-                <x-post-card></x-post-card>
-                <x-post-card></x-post-card>
-            </div>
+            @else
+            <p class="text-center">No post yet.. please check back later</p>
+            @endif
 
-            <div class="lg:grid lg:grid-cols-3">
+
+            {{-- <div class="lg:grid lg:grid-cols-3">
                 <x-post-card></x-post-card>
                 <x-post-card></x-post-card>
                 <x-post-card></x-post-card>
-            </div>
+            </div> --}}
         </main>
 </x-layout>
 
