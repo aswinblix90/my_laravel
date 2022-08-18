@@ -20,8 +20,6 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::get('/', function () {
-    // $post = Post::find(1);
-    // var_dump($post->category->name);
     // DB::listen(function($query){
     //     logger($query->sql,$query->bindings);
     // });
@@ -31,18 +29,12 @@ Route::get('/', function () {
 });
 
 Route::get('posts/{post:slug}', function (Post $post) {
-    // DB::listen(function ($query) {
-    //     logger($query->sql);
-    // });
     return view('/post', [
         'post' => $post
     ]);
 });
 
 Route::get('categories/{category}',function(Category $category){
-    // DB::listen(function ($query) {
-    //     logger($query->sql);
-    // });
     return view('posts', [
         'posts' => $category->posts
     ]);
@@ -52,10 +44,3 @@ Route::get('authors/{author:username}',function(User $author){
         'posts'=> $author->posts
     ]);
 });
-// Post::create([
-//     'category_id' => 3,
-//     'title' => 'My First hobbies post',
-//     'slug' => 'my-first-hobbies-post',
-//     'excerpt' => 'My first hobbies post excerpt',
-//     'body' => 'My first hobbies post body body'
-// ]);
