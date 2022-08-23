@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
 use Illuminate\Support\Facades\File;
@@ -7,7 +8,6 @@ use Symfony\Component\VarDumper\VarDumper;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Factories\Factory;
 
 
 /*
@@ -21,30 +21,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 |
 */
 
-Route::get('/', function () {
-    $posts = Post::latest();
-    // dd($posts);
-    if(request('search')){
-        $posts
-            ->where('title', 'like', '%' . request('search') . '%')
-            ->orWhere('body', 'like', '%' . request('search') . '%');
-    }
-    // DB::listen(function($query){
-    //     logger($query->sql,$query->bindings);
-    // });
-    // $test = '<p>' . implode('</p><p>', fake()->paragraphs(6)) . '</p>';
-    // dd($test);
-    return view('posts', [
-        'posts' => $posts->get(),
-        'categories' => Category::all()
-    ]);
-})->name('home');
+Route::get('/', [PostController::class,'index'])->name('home');
 
-Route::get('posts/{post:slug}', function (Post $post) {
-    return view('/post', [
-        'post' => $post
-    ]);
-});
+Route::get('posts/{post:slug}',[PostController::class,'show']);
 
 Route::get('categories/{category:slug}',function(Category $category){
     return view('posts', [
