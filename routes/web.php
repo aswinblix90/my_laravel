@@ -7,6 +7,8 @@ use Symfony\Component\VarDumper\VarDumper;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,8 @@ Route::get('/', function () {
     // DB::listen(function($query){
     //     logger($query->sql,$query->bindings);
     // });
+    // $test = '<p>' . implode('</p><p>', fake()->paragraphs(6)) . '</p>';
+    // dd($test);
     return view('posts', [
         'posts' => Post::latest('published_at')->get(),
         'categories' => Category::all()
