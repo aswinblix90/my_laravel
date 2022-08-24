@@ -10,14 +10,9 @@ class PostController extends Controller
 {
     //
     public function index(){
-        $posts = Post::latest();
-        if (request('search')) {
-            $posts
-                ->where('title', 'like', '%' . request('search') . '%')
-                ->orWhere('body', 'like', '%' . request('search') . '%');
-        }
+
         return view('posts', [
-            'posts' => $posts->get(),
+            'posts' => $this->getPosts(),
             'categories' => Category::all()
         ]);
     }
@@ -25,5 +20,14 @@ class PostController extends Controller
         return view('/post', [
             'post' => $post
         ]);
+    }
+    public function getPosts(){
+        $posts = Post::latest();
+        if (request('search')) {
+            $posts
+                ->where('title', 'like', '%' . request('search') . '%')
+                ->orWhere('body', 'like', '%' . request('search') . '%');
+        }
+        return $posts->get();
     }
 }
