@@ -21,12 +21,14 @@ class Post extends Model
         return $this->belongsTo(User::class,'user_id');
     }
     public function scopeFilter($query,array $filters){
-        $query = Post::latest();
-        if ($filters['search'] ?? false) {
+        // $query = Post::latest();
+        $query->/* `when` is a method that is used to check if the condition is true or false. If the
+        condition is true, then it will execute the callback function. */
+        when($filters['search'] ?? false,function($query,$searchh) {
             $query
-                ->where('title', 'like', '%' . request('search') . '%')
-                ->orWhere('body', 'like', '%' . request('search') . '%');
-        }
+                ->where('title', 'like', '%' . $searchh. '%')
+                ->orWhere('body', 'like', '%' . $searchh . '%');
+        });
         return $query;
     }
 
