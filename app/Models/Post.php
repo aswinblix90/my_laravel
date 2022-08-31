@@ -24,11 +24,10 @@ class Post extends Model
         // $query = Post::latest();
         $query->/* `when` is a method that is used to check if the condition is true or false. If the
         condition is true, then it will execute the callback function. */
-        when($filters['search'] ?? false,function($query,$searchh) {
+        when($filters['search'] ?? false,fn($query,$search)=>
             $query
-                ->where('title', 'like', '%' . $searchh. '%')
-                ->orWhere('body', 'like', '%' . $searchh . '%');
-        });
+                ->where('title', 'like', '%' . $search. '%')
+                ->orWhere('body', 'like', '%' . $search . '%'));
         return $query;
     }
 
